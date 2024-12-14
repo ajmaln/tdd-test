@@ -13,4 +13,12 @@ describe('add', () => {
     it('should add two numbers', () => {
         expect(add('1,5')).toBe(6);
     });
+
+    it('should add three numbers', () => {
+        expect(add('1,5,10')).toBe(16);
+    });
+
+    it('should support new lines', () => {
+        expect(add('1\n5,10\n90,15')).toBe(121);
+    });
 });
