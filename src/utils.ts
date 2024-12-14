@@ -1,3 +1,4 @@
+import AdditionError from "./errors/AdditionError";
 
 
 export const extractDelimiterAndNumbersString = (input: string) => {
@@ -12,7 +13,7 @@ export const add = (input: string) => {
     const numbers = numbersString.split(new RegExp(`[${delimiter}\n]`)).map(Number);
     const negatives = numbers.filter(n => n < 0);
     if (negatives.length > 0) {
-        throw new Error(`Negative numbers are not allowed ${negatives.join(',')}`);
+        throw new AdditionError(`Negative numbers are not allowed ${negatives.join(',')}`);
     }
     return numbers.reduce((acc, curr) => acc + curr, 0);
 };
