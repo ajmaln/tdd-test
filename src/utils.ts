@@ -1,12 +1,18 @@
 
 
+export const extractDelimiterAndNumbersString = (input: string) => {
+    if (!input.startsWith('//')) return { delimiter: ',', numbersString: input };
+
+    const lines = input.split('\n');
+    return { delimiter: lines[0].slice(2), numbersString: lines.slice(1).join('\n') };
+}
+
 export const add = (input: string) => {
-    let numbers = input;
-    let delimiter = ',';
-    if (input.startsWith('//')) {
-        const lines = input.split('\n');
-        delimiter = lines[0].slice(2);
-        numbers = lines.slice(1).join('\n');
+    const { delimiter, numbersString } = extractDelimiterAndNumbersString(input);
+    const numbers = numbersString.split(new RegExp(`[${delimiter}\n]`)).map(Number);
+    const negatives = numbers.filter(n => n < 0);
+    if (negatives.length > 0) {
+        throw new Error(`Negative numbers are not allowed ${negatives.join(',')}`);
     }
-    return numbers.split(new RegExp(`[${delimiter}\n]`)).reduce((acc, curr) => acc + Number(curr), 0);
+    return numbers.reduce((acc, curr) => acc + curr, 0);
 };
