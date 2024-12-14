@@ -49,4 +49,18 @@ describe('Calculator', () => {
         await user.click(button)
         expect(screen.getByText('Negative numbers are not allowed -1,-2,-3')).toBeInTheDocument()
     })
+
+    it('should clear the error message when the calculate button is clicked with valid input', async () => {
+        render(<Calculator />)
+        const input = screen.getByRole('textbox')
+        const user = userEvent.setup()
+        await user.type(input, '-1,-2,-3,4,5,6')
+        const button = screen.getByRole('button', { name: 'Calculate Sum' })
+        await user.click(button)
+        expect(screen.queryByText('Negative numbers are not allowed -1,-2,-3')).toBeInTheDocument()
+        await user.clear(input)
+        await user.type(input, '1,2,3,4,5,6')
+        await user.click(button)
+        expect(screen.queryByText('Negative numbers are not allowed -1,-2,-3')).not.toBeInTheDocument()
+    })
 })

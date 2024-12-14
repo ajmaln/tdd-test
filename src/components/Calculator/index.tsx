@@ -12,6 +12,7 @@ const Calculator = () => {
     const handleCalculateSum = () => {
       try {
         setResult(add(input))
+        setError('')
       } catch (error) {
         if (error instanceof AdditionError) {
           setError(error.message)
