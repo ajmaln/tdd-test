@@ -21,4 +21,12 @@ describe('add', () => {
     it('should support new lines', () => {
         expect(add('1\n5,10\n90,15')).toBe(121);
     });
+
+    it('should support custom delimiter', () => {
+        expect(add('//;\n1;5;10;99;15')).toBe(130);
+    });
+
+    it('should support custom delimiter with new lines', () => {
+        expect(add('//;\n1\n5;10\n110;15')).toBe(141);
+    });
 });
